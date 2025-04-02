@@ -4,13 +4,13 @@ WORKDIR /app
 
 # Install dependencies
 COPY package*.json ./
-RUN npm install
+RUN npm install --production
 
 # Copy source code
 COPY . .
 
-# Debug: List files to verify structure
-RUN ls -la && ls -la src/
+# Debug: List files and verify node_modules
+RUN ls -la && ls -la node_modules/
 
 EXPOSE 3001
 
