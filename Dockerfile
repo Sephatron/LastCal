@@ -9,10 +9,10 @@ RUN npm install
 # Copy source code
 COPY . .
 
-# Build TypeScript
-RUN npm run build
+# Debug: List files to verify structure
+RUN ls -la && ls -la src/
 
 EXPOSE 3001
 
 # Start the application
-CMD ["npm", "start"] 
+CMD ["node", "src/server.js"] 
