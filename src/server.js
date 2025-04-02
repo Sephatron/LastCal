@@ -1,9 +1,9 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const { createEvent, getEventsByDateRange, updateEvent, deleteEvent, getEventById } = require('../db/events');
-const { createCategory, getCategoriesByUserId, updateCategory, deleteCategory, getCategoryById } = require('../db/categories');
-const { createShare, getSharesByEventId, getSharedEventsByUserId, updateSharePermission, deleteShare, checkEventAccess } = require('../db/shares');
+const { createEvent, getEventsByDateRange, updateEvent, deleteEvent, getEventById } = require('./db/events');
+const { createCategory, getCategoriesByUserId, updateCategory, deleteCategory, getCategoryById } = require('./db/categories');
+const { createShare, getSharesByEventId, getSharedEventsByUserId, updateSharePermission, deleteShare, checkEventAccess } = require('./db/shares');
 
 const app = express();
 const port = process.env.PORT || 3001;
