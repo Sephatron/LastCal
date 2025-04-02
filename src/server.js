@@ -12,9 +12,13 @@ const port = process.env.PORT || 3001;
 app.use(cors());
 app.use(express.json());
 
-// Basic health check route
+// Health check route
 app.get('/health', (req, res) => {
-  res.json({ status: 'ok' });
+  res.json({ 
+    status: 'ok',
+    timestamp: new Date().toISOString(),
+    environment: process.env.NODE_ENV
+  });
 });
 
 // Event routes
@@ -159,9 +163,20 @@ app.delete('/api/shares/:id', async (req, res) => {
   }
 });
 
-// Add better error handling for production
+// Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
+  
+  // Handle database connection errors
+  if (err.code === 'ECONNREFUSED') {
+    return res.status(503).json({ 
+      error: 'Database connection failed',
+      message: process.env.NODE_ENV === 'production' 
+        ? 'Service temporarily unavailable' 
+        : err.message 
+    });
+  }
+
   res.status(500).json({ 
     error: process.env.NODE_ENV === 'production' 
       ? 'Something went wrong!' 
